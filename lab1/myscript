@@ -2,25 +2,33 @@
 echo "The current directory is:";
 curdir=`pwd`;
 echo $curdir;
-for ((i=a; a<3; a++))
+while true;
 do
-echo "Enter file name";
-read file_name;
-if [ -f $file_name ];
-then echo "File exist";
-date -r $file_name +%F;
-echo "Enter date (YYYY-MM-DD):";
-read var_date;
-date -d $var_date +%F &>/dev/null
-if [ $? -eq 0 ];
-then if [ "`date -d "$var_date" +%F`" \> "`date -r "$file_name" +%F`" ];
-then echo "File has not changed";
-else echo "File has changed";
-fi
-fi
-break;
-else echo "File does not exist" && echo " ";
-fi
+    echo "Enter file name";
+    read file_name;
+    if [ -e "$file_name" ];
+    then 
+        echo "File exist";
+        date -r $file_name +%F;
+        echo "Enter date (YYYY-MM-DD):";
+        read var_date;
+        date "+%Y-%m-%d" -d "$var_date" > /dev/null  2>&1;
+        if [ $? == 0 ]; 
+        then
+            if [ "`date -d "$var_date" +%F`" \> "`date -r "$file_name" +%F`" ];
+            then 
+                echo "The file has not been modified since" $var_date;
+                exit 1
+            else 
+                echo "The file has been modified since" $var_date;
+                exit 120
+            fi
+        else 
+            echo "Incorrect date";
+        fi
+    else 
+        echo "File does not exist" && echo " ";
+    fi
 done
 
 
