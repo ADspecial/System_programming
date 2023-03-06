@@ -1,4 +1,8 @@
 #!/bin/bash
+echo "Author : Lekontsev Danil 
+Programm : Check changes
+Description : Checking file changes";
+
 echo "The current directory is:";
 curdir=`pwd`;
 echo $curdir;
