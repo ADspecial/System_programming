@@ -3,5 +3,5 @@ LABEL Author = "Lekontsev Danil" Programm name = "Check" Description = "Checking
 RUN yum update
 WORKDIR /usr/src/my_app_directory
 COPY . .
-RUN chmod +x ./myscript
+RUN chmod +x ./myscript && touch file1
 CMD ["./myscript"]
